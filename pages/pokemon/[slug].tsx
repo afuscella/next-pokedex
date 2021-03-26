@@ -21,28 +21,28 @@ export default function Pokemon({ pokemon }) {
       />
 
       <div>
-        <Link href="/">Take me to pokemons list.</Link>
+        <Link href="/">Back to pokemons list.</Link>
       </div>
     </div>
   );
 }
 
 export async function getStaticProps({ params }) {
-  const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`)
+  const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.slug}`)
     // eslint-disable-next-line consistent-return
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
       // eslint-disable-next-line no-console
-      console.log(`Pokemon ${params.id} is not available.`);
+      console.log(`Pokemon ${params.slug} is not available.`);
     })
     .then((response) => response);
 
   return {
     props: {
       pokemon: {
-        id: params.id,
+        id: params.slug,
         name: pokemon?.species.name || '',
         image: pokemon?.sprites.front_default || '',
       },
@@ -58,7 +58,7 @@ export async function getStaticPaths() {
       }
       throw new Error('Pokedex API not available');
     })
-    .then((response) => response.pokemon_entries.map((entry) => ({ params: { id: `${entry.entry_number}` } })));
+    .then((response) => response.pokemon_entries.map((entry) => ({ params: { slug: `${entry.entry_number}` } })));
 
   return {
     paths: [
