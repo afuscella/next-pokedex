@@ -11,7 +11,7 @@
     "commit": "cz",
     "lint:fix": "eslint ./ --fix",
     "lint": "eslint --ignore-path .gitignore .",
-    "shelljs": "^0.8.4"
+    "custom-script": "node ./scripts/diff.js"
   },
   "keywords": [],
   "author": "",
